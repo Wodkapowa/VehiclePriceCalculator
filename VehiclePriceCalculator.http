@@ -1,3 +1,5 @@
+@VehiclePriceCalculator_HostAddress = http://localhost:5137
+
 POST {{VehiclePriceCalculator_HostAddress}}/api/pricecalculator/calculate
 Content-Type: application/json
 
