@@ -1,6 +1,10 @@
-@VehiclePriceCalculator_HostAddress = http://localhost:5137
+POST {{VehiclePriceCalculator_HostAddress}}/api/pricecalculator/calculate
+Content-Type: application/json
 
-GET {{VehiclePriceCalculator_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
+{
+"baseNet": 10000,
+"baseGross": null,
+"equipmentNet": 100,
+"equipmentGross": null,
+"vatRate": 0.22
+}
