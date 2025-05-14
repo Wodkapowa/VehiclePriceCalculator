@@ -18,9 +18,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(c =>
+    app.UseSwaggerUI(options =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Vehicle Price Calculator API v1");
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "VehiclePriceCalculator API V1");
+        options.RoutePrefix = string.Empty;  // This will make Swagger UI available at the root (https://localhost:7001/)
     });
 }
 
