@@ -1,0 +1,6 @@
+@VehiclePriceCalculator_HostAddress = http://localhost:5137
+
+GET {{VehiclePriceCalculator_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
