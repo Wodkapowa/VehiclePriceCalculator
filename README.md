@@ -12,6 +12,7 @@ A simple ASP.NET Core Web API for calculating the final vehicle price based on b
 
 - .NET 9 (Preview)
 - ASP.NET Core
+- MS test
 
 ## ▶️ Getting Started
 
@@ -29,9 +30,11 @@ POST /api/pricecalculator/calculate
 Content-Type: application/json
 
 {
-  "vatRate": 20,
-  "baseNet": 20000,
-  "equipmentGross": 2400
+  "baseNet": 10000,
+  "baseGross": 0,
+  "equipmentNet": 0,
+  "equipmentGross": 122,
+  "vatRate": 22
 }
 
 4. 📂 Project Structure
