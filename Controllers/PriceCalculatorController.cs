@@ -12,8 +12,10 @@ public class PriceCalculatorController : ControllerBase
     {
         try
         {
-            var basePrice = ConvertToNetAndGross(request.BaseNet, request.BaseGross, request.VatRate);
-            var equipmentPrice = ConvertToNetAndGross(request.EquipmentNet, request.EquipmentGross, request.VatRate);
+            var vat = request.VatRate / 100m;
+
+            var basePrice = ConvertToNetAndGross(request.BaseNet, request.BaseGross, vat);
+            var equipmentPrice = ConvertToNetAndGross(request.EquipmentNet, request.EquipmentGross, vat);
 
             var totalNet = basePrice.Net + equipmentPrice.Net;
             var totalGross = basePrice.Gross + equipmentPrice.Gross;
