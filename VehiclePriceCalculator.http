@@ -4,9 +4,9 @@ POST {{VehiclePriceCalculator_HostAddress}}/api/pricecalculator/calculate
 Content-Type: application/json
 
 {
-"baseNet": 10000,
-"baseGross": null,
-"equipmentNet": 100,
+"baseNet": 0,
+"baseGross": 3344,
+"equipmentNet": 1,
 "equipmentGross": null,
-"vatRate": 0.22
+"vatRate": 22.00
 }
