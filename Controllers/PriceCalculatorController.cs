@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using VehiclePriceCalculator.Models;
 
 namespace VehiclePriceCalculator.Controllers;
@@ -7,9 +8,19 @@ namespace VehiclePriceCalculator.Controllers;
 [Route("api/[controller]")]
 public class PriceCalculatorController : ControllerBase
 {
+    private readonly ILogger<PriceCalculatorController> _logger;
+
+    public PriceCalculatorController(ILogger<PriceCalculatorController> logger)
+    {
+        _logger = logger;
+    }
+
     [HttpPost("calculate")]
     public ActionResult<VehiclePriceResponse> Calculate([FromBody] VehiclePriceRequest request)
     {
+        _logger.LogInformation("Received price calculation request: BaseNet={BaseNet}, BaseGross={BaseGross}, EquipmentNet={EquipmentNet}, EquipmentGross={EquipmentGross}, VatRate={VatRate}",
+            request.BaseNet, request.BaseGross, request.EquipmentNet, request.EquipmentGross, request.VatRate);
+
         try
         {
             var vat = request.VatRate / 100m;
@@ -27,11 +38,20 @@ public class PriceCalculatorController : ControllerBase
                 TotalPrice = new PriceDetail { Net = totalNet, Gross = totalGross }
             };
 
+            _logger.LogInformation("Price calculation succeeded: TotalNet={TotalNet}, TotalGross={TotalGross}, Label={Label}",
+                totalNet, totalGross,response.Label);
+
             return Ok(response);
         }
         catch (ArgumentException ex)
         {
+            _logger.LogWarning(ex, "Price calculation failed due to invalid input");
             return BadRequest(new { error = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Unexpected error during price calculation");
+            return StatusCode(500, new { error = "Internal server error" });
         }
     }
 
@@ -65,5 +85,4 @@ public class PriceCalculatorController : ControllerBase
         // Optional price, allow zero
         return new PriceDetail { Net = 0, Gross = 0 };
     }
-
 }

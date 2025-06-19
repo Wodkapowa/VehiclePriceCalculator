@@ -2,12 +2,14 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VehiclePriceCalculator.Controllers;
 using VehiclePriceCalculator.Models;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace VehiclePriceCalculator.Tests;
 
 [TestClass]
 public sealed class PriceCalculatorControllerTests
 {
+   
     [TestMethod]
     public void Calculate_ReturnsCorrectNetAndGrossTotals()
     {
@@ -28,7 +30,8 @@ public sealed class PriceCalculatorControllerTests
         decimal expectedTotalNet = 10100m;
         decimal expectedTotalGross = 12322m;
 
-        var controller = new PriceCalculatorController();
+        var logger = NullLogger<PriceCalculatorController>.Instance;
+        var controller = new PriceCalculatorController(logger);
 
         // Act
         var result = controller.Calculate(request);
@@ -59,7 +62,9 @@ public sealed class PriceCalculatorControllerTests
             VatRate = 22m
         };
 
-        var controller = new PriceCalculatorController();
+        var logger = NullLogger<PriceCalculatorController>.Instance;
+        var controller = new PriceCalculatorController(logger);
+
         var result = controller.Calculate(request);
 
         Assert.IsNotNull(result);
@@ -85,7 +90,9 @@ public sealed class PriceCalculatorControllerTests
             VatRate = 22m
         };
 
-        var controller = new PriceCalculatorController();
+        var logger = NullLogger<PriceCalculatorController>.Instance;
+        var controller = new PriceCalculatorController(logger);
+
         var result = controller.Calculate(request);
 
         Assert.IsNotNull(result);
@@ -107,7 +114,9 @@ public sealed class PriceCalculatorControllerTests
             VatRate = 20m
         };
 
-        var controller = new PriceCalculatorController();
+        var logger = NullLogger<PriceCalculatorController>.Instance;
+        var controller = new PriceCalculatorController(logger);
+
         var result = controller.Calculate(request);
 
         Assert.IsNotNull(result);
