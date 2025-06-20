@@ -3,13 +3,21 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VehiclePriceCalculator.Controllers;
 using VehiclePriceCalculator.Models;
 using Microsoft.Extensions.Logging.Abstractions;
+using VehiclePriceCalculator.Services;
 
 namespace VehiclePriceCalculator.Tests;
 
 [TestClass]
 public sealed class PriceCalculatorControllerTests
 {
-   
+    private IPriceCalculatorService priceCalculatorService;
+
+    [TestInitialize]
+    public void Setup()
+    {
+        priceCalculatorService = new PriceCalculatorService();
+    }
+
     [TestMethod]
     public void Calculate_ReturnsCorrectNetAndGrossTotals()
     {
@@ -31,7 +39,7 @@ public sealed class PriceCalculatorControllerTests
         decimal expectedTotalGross = 12322m;
 
         var logger = NullLogger<PriceCalculatorController>.Instance;
-        var controller = new PriceCalculatorController(logger);
+        var controller = new PriceCalculatorController(logger, priceCalculatorService);
 
         // Act
         var result = controller.Calculate(request);
@@ -63,7 +71,7 @@ public sealed class PriceCalculatorControllerTests
         };
 
         var logger = NullLogger<PriceCalculatorController>.Instance;
-        var controller = new PriceCalculatorController(logger);
+        var controller = new PriceCalculatorController(logger, priceCalculatorService);
 
         var result = controller.Calculate(request);
 
@@ -91,7 +99,7 @@ public sealed class PriceCalculatorControllerTests
         };
 
         var logger = NullLogger<PriceCalculatorController>.Instance;
-        var controller = new PriceCalculatorController(logger);
+        var controller = new PriceCalculatorController(logger, priceCalculatorService);
 
         var result = controller.Calculate(request);
 
@@ -115,7 +123,7 @@ public sealed class PriceCalculatorControllerTests
         };
 
         var logger = NullLogger<PriceCalculatorController>.Instance;
-        var controller = new PriceCalculatorController(logger);
+        var controller = new PriceCalculatorController(logger, priceCalculatorService);
 
         var result = controller.Calculate(request);
 

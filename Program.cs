@@ -1,8 +1,13 @@
 using Microsoft.OpenApi.Models;
+using VehiclePriceCalculator.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
+// <-- Register your service here -->
+builder.Services.AddScoped<IPriceCalculatorService, PriceCalculatorService>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
